@@ -12,7 +12,10 @@ import CoreLocation
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     let WEATHER_URL = "ce030962dcc354dbb9fb951f5c70abf9"
+    let APP_ID = "e72ca729af228beabd5d20e3b7749713"
     
+    
+    //TODO: declare instance variable CLLocationManager()
     let locationManager = CLLocationManager()
     
     
@@ -25,8 +28,9 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
         //TODO: Setting up location manager
         locationManager.delegate = self
-        
-        
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         
     }
     
@@ -68,12 +72,24 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the didUpdateLocations method here:
-    func didUpdataeLocations() {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[locations.count - 1]
+        if location.horizontalAccuracy > 0 {
+            locationManager.stopUpdatingLocation()
+            print("Location: \(location.coordinate.longitude), Latitude: \(location.coordinate.latitude)")
+            
+            let lat = String(location.coordinate.latitude)
+            let long = String(location.coordinate.longitude)
+            let params : [String: String] = ["lat" : lat, "long": long, "appid" : APP_ID]
+        }
+        
         
     }
     
     //Write the didFailWithError method here:
-    func didFailWithError() {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+        cityLabel.text = "Location Unavailable"
         
     }
     
@@ -90,9 +106,9 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     //Write the PrepareForSegue Method here
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        <#code#>
+        
     }
 
 
-}
+} // end WVC Class
 
