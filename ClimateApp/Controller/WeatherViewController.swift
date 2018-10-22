@@ -13,6 +13,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     let WEATHER_URL = "ce030962dcc354dbb9fb951f5c70abf9"
     
+    let locationManager = CLLocationManager()
+    
     
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var weatherIcon: UIImageView!
@@ -20,7 +22,12 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //TODO: Setting up location manager
+        locationManager.delegate = self
+        
+        
+        
     }
     
     
@@ -28,11 +35,10 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     /***************************************************************/
     
     //Write the getWeatherData method here:
-    
-    
-    
-    
-    
+    func getWeatherData() {
+        
+    }
+
     
     
     //MARK: - JSON Parsing
@@ -40,7 +46,9 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the updateWeatherData method here:
-    
+    func updateWeatherData()  {
+        
+    }
     
     
     
@@ -50,24 +58,24 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the updateUIWithWeatherData method here:
+    func updateUIWithWeatherData() {
     
-    
-    
-    
-    
+    }
+
     
     //MARK: - Location Manager Delegate Methods
     /***************************************************************/
     
     
     //Write the didUpdateLocations method here:
-    
-    
+    func didUpdataeLocations() {
+        
+    }
     
     //Write the didFailWithError method here:
-    
-    
-    
+    func didFailWithError() {
+        
+    }
     
     
     //MARK: - Change City Delegate methods
@@ -75,11 +83,15 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the userEnteredANewCityName Delegate method here:
-    
+    func userEnteredANewCityName() {
+        
+    }
     
     
     //Write the PrepareForSegue Method here
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        <#code#>
+    }
 
 
 }
