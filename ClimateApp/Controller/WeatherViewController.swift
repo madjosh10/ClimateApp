@@ -13,8 +13,8 @@ import SwiftyJSON
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
-    let WEATHER_URL = "ce030962dcc354dbb9fb951f5c70abf9"
-    let APP_ID = "e72ca729af228beabd5d20e3b7749713"
+    let WEATHER_URL = "https://openweathermap.org/data/2.5/weather"
+    let APP_ID = "98eefddb568daedb0c9fbcf6ea59327b"
     
     
     //TODO: declare instance variable CLLocationManager()
@@ -42,9 +42,16 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     //Write the getWeatherData method here:
     func getWeatherData(url: String, parameters: [String: String]) {
-        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { (response) in
+        
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { response in
             if response.result.isSuccess {
                 print("Success! Got the Weather Data")
+                
+//                guard let weatherJson : JSON  = JSON(response.result.value) else { return }
+                let weatherJSON : JSON = JSON(response.result.value!)
+                print(weatherJSON)
+                self.updateWeatherData(json: weatherJSON)
+                
                 
             } else {
                 print("Error \(response.result.error)")
@@ -62,7 +69,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the updateWeatherData method here:
-    func updateWeatherData()  {
+    func updateWeatherData(json: JSON)  {
+        let tempResult = json["main"]["temp"]
         
     }
     
@@ -88,6 +96,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
+            locationManager.delegate = nil
+            
             print("Location: \(location.coordinate.longitude), Latitude: \(location.coordinate.latitude)")
             
             let lat = String(location.coordinate.latitude)
